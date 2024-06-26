@@ -1,18 +1,25 @@
 
 #include "Form.hpp"
 
-Form::Form() : name("default"), formSigned(false), gradeToSign(150), gradeToExecute(150) {}
+Form::Form() : name("default"), formSigned(false), gradeToSign(150), gradeToExecute(150) {
+	std::cout << "Form " << name << " created" << std::endl;
+}
 
 Form::Form(std::string const &name, int gradeToSign, int gradeToExecute) : name(name), formSigned(false), gradeToSign(gradeToSign), gradeToExecute(gradeToExecute) {
 	if (gradeToSign < 1 || gradeToExecute < 1)
 		throw Form::GradeTooHighException();
 	if (gradeToSign > 150 || gradeToExecute > 150)
 		throw Form::GradeTooLowException();
+	std::cout << "Form " << name << " created" << std::endl;
 }
 
-Form::Form(Form const &form) : name(form.name), formSigned(form.formSigned), gradeToSign(form.gradeToSign), gradeToExecute(form.gradeToExecute) {}
+Form::Form(Form const &form) : name(form.name), formSigned(form.formSigned), gradeToSign(form.gradeToSign), gradeToExecute(form.gradeToExecute) {
+	std::cout << "Form " << name << " created" << std::endl;
+}
 
-Form::~Form() {}
+Form::~Form() {
+	std::cout << "Form " << name << " destroyed" << std::endl;
+}
 
 Form &Form::operator=(Form const &form) {
 	if (this == &form)
@@ -37,10 +44,11 @@ int Form::getGradeToExecute() const {
 	return gradeToExecute;
 }
 
-void Form::beSigned(Bureaucrat const &bureaucrat) {
-	if (bureaucrat.getGrade() > gradeToSign)
-		throw Form::GradeTooLowException();
-	formSigned = true;
+void Form::beSigned(const Bureaucrat& bureaucrat) {
+    if (bureaucrat.getGrade() > this->gradeToSign) {
+        throw GradeTooLowException();
+    }
+    this->formSigned = true;
 }
 
 std::ostream &operator<<(std::ostream &out, Form const &form) {
@@ -50,4 +58,3 @@ std::ostream &operator<<(std::ostream &out, Form const &form) {
 	out << "signed";
 	return out;
 }
-

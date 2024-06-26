@@ -1,9 +1,13 @@
 
 #include "Bureaucrat.hpp"
 
-Bureaucrat::Bureaucrat() : name("default"), grade(150) {}
+Bureaucrat::Bureaucrat() : name("default"), grade(150) {
+	std::cout << "Bureaucrat " << this->name << " created" << std::endl;
+}
 
-Bureaucrat::Bureaucrat(Bureaucrat const &bureaucrat) : name(bureaucrat.name), grade(bureaucrat.grade) {}
+Bureaucrat::Bureaucrat(Bureaucrat const &bureaucrat) : name(bureaucrat.name), grade(bureaucrat.grade) {
+	std::cout << "Bureaucrat " << this->name << " created" << std::endl;
+}
 
 Bureaucrat::~Bureaucrat() {
 	std::cout << "Bureaucrat " << this->name << " destroyed" << std::endl;
@@ -14,6 +18,15 @@ Bureaucrat &Bureaucrat::operator=(Bureaucrat const &bureaucrat) {
 		return *this;
 	this->grade = bureaucrat.grade;
 	return *this;
+}
+
+void Bureaucrat::signForm(Form& form) {
+    try {
+        form.beSigned(*this);
+        std::cout << name << " signed " << form.getName() << std::endl;
+    } catch (const Form::GradeTooLowException& e) {
+        std::cout << name << " couldn’t sign " << form.getName() << " because " << e.what() << std::endl;
+    }
 }
 
 Bureaucrat::Bureaucrat(std::string const &name, int grade) : name(name) {

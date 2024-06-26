@@ -18,7 +18,6 @@ class Bureaucrat
 		~Bureaucrat();
 		
 		Bureaucrat &operator=(Bureaucrat const &bureaucrat);
-		Bureaucrat &operator<<(Bureaucrat const &bureaucrat);
 
 		std::string const &getName() const;
 		int getGrade() const;
@@ -38,4 +37,7 @@ class Bureaucrat
 		};
 
 };
+
+std::ostream &operator<<(std::ostream &os, Bureaucrat const &bureaucrat);
+
 #endif
